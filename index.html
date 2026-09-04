@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Personal Wallet • Glass OS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* iOS Liquid Glass Effect */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.25),
+        0 12px 35px -8px rgba(0, 0, 0, 0.6);
+    }
+    
+    .glass-card-subtle {
+      background: rgba(18, 24, 38, 0.55);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: inset 0 1px 0.5px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .glass-input {
+      background: rgba(10, 15, 29, 0.6);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1.5px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Custom Scrollbar for Account Pills */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-[#060913] text-slate-100 min-h-screen font-sans selection:bg-indigo-500 selection:text-white pb-20 relative overflow-x-hidden">
+
+  <!-- Ambient Glow Background Orbs (Control Center Atmosphere) -->
+  <div class="fixed top-[-10%] left-[-15%] w-[450px] h-[450px] rounded-full bg-indigo-600/25 blur-[120px] pointer-events-none"></div>
+  <div class="fixed top-[30%] right-[-20%] w-[400px] h-[400px] rounded-full bg-emerald-500/20 blur-[130px] pointer-events-none"></div>
+  <div class="fixed bottom-[-10%] left-[20%] w-[450px] h-[450px] rounded-full bg-rose-600/15 blur-[140px] pointer-events-none"></div>
+
+  <!-- Top Glass Bar -->
+  <header class="sticky top-0 z-40 px-4 py-3 bg-[#060913]/60 backdrop-blur-2xl border-b border-white/10">
+    <div class="max-w-2xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl glass-pill flex items-center justify-center shadow-lg shadow-indigo-500/15 text-indigo-300">
+          <i class="fa-solid fa-wallet text-base"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-sm tracking-wide text-white">Wallet Studio</h1>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Sync</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-medium tracking-tight">Cloud Database Connected</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Export CSV Button -->
+        <button onclick="exportToCSV()" title="Export CSV" class="w-10 h-10 rounded-2xl glass-pill hover:bg-white/20 active:scale-95 transition flex items-center justify-center text-slate-300 hover:text-white">
+          <i class="fa-solid fa-file-arrow-down text-sm"></i>
+        </button>
+        <!-- Add Button -->
+        <button onclick="openModal()" class="h-10 px-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-400 hover:to-blue-500 text-white font-semibold text-xs flex items-center gap-2 shadow-lg shadow-indigo-500/30 active:scale-95 transition">
+          <i class="fa-solid fa-plus text-xs"></i>
+          <span>အသစ်ထည့်ရန်</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-2xl mx-auto px-4 mt-5 space-y-5">
+
+    <!-- Hero Balance Capsules (Liquid Glass) -->
+    <div class="grid grid-cols-2 gap-3.5">
+      
+      <!-- MMK Card -->
+      <div class="glass-card rounded-3xl p-4 sm:p-5 relative overflow-hidden group">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-medium tracking-wider uppercase text-indigo-200/80">လက်ကျန် (ကျပ်)</span>
+          <div class="w-7 h-7 rounded-full glass-pill flex items-center justify-center text-indigo-300 text-xs">
+            <i class="fa-solid fa-money-bill-wave"></i>
+          </div>
+        </div>
+        <div class="text-xl sm:text-2xl font-black mt-2 text-white tracking-tight" id="totalMMK">0 <span class="text-xs font-semibold text-slate-400">MMK</span></div>
+        <div class="mt-3 flex items-center justify-between pt-2 border-t border-white/10 text-[11px]">
+          <div class="flex items-center gap-1 text-emerald-400 font-semibold" id="incMMK">
+            <i class="fa-solid fa-arrow-down-long text-[10px]"></i> +0
+          </div>
+          <div class="flex items-center gap-1 text-rose-400 font-semibold" id="expMMK">
+            <i class="fa-solid fa-arrow-up-long text-[10px]"></i> -0
+          </div>
+        </div>
+      </div>
+
+      <!-- THB Card -->
+      <div class="glass-card rounded-3xl p-4 sm:p-5 relative overflow-hidden group">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-medium tracking-wider uppercase text-amber-200/80">လက်ကျန် (ဘတ်)</span>
+          <div class="w-7 h-7 rounded-full glass-pill flex items-center justify-center text-amber-300 text-xs">
+            <i class="fa-solid fa-coins"></i>
+          </div>
+        </div>
+        <div class="text-xl sm:text-2xl font-black mt-2 text-amber-300 tracking-tight" id="totalTHB">0 <span class="text-xs font-semibold text-slate-400">THB</span></div>
+        <div class="mt-3 flex items-center justify-between pt-2 border-t border-white/10 text-[11px]">
+          <div class="flex items-center gap-1 text-emerald-400 font-semibold" id="incTHB">
+            <i class="fa-solid fa-arrow-down-long text-[10px]"></i> +0
+          </div>
+          <div class="flex items-center gap-1 text-rose-400 font-semibold" id="expTHB">
+            <i class="fa-solid fa-arrow-up-long text-[10px]"></i> -0
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Account Balances Carousel (Control Center Pill Widgets) -->
+    <div>
+      <div class="flex items-center justify-between mb-2.5 px-1">
+        <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">ပိုက်ဆံအိတ်များ</span>
+        <span class="text-[10px] text-slate-400">ဘေးသို့ ဆွဲကြည့်ပါ ➔</span>
+      </div>
+      <div class="flex gap-2.5 overflow-x-auto no-scrollbar pb-1" id="accountBreakdownList">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+
+    <!-- Search & Filters Container -->
+    <div class="glass-card-subtle rounded-2xl p-3 space-y-3">
+      <!-- Search Input -->
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+        <input type="text" id="searchInput" oninput="applyFilters()" placeholder="မှတ်ချက် သို့မဟုတ် အမျိုးအစား ရှာရန်..." class="w-full glass-input rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 transition" />
+      </div>
+
+      <!-- Segmented Pill Filters -->
+      <div class="grid grid-cols-3 gap-1.5 p-1 bg-black/40 rounded-xl border border-white/5">
+        <button onclick="setFilter('all')" id="filter-all" class="py-1.5 text-xs font-bold rounded-lg transition bg-white/20 text-white shadow-sm">အားလုံး</button>
+        <button onclick="setFilter('expense')" id="filter-expense" class="py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">အသုံးစရိတ်</button>
+        <button onclick="setFilter('income')" id="filter-income" class="py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">ဝင်ငွေ</button>
+      </div>
+    </div>
+
+    <!-- Transaction Header -->
+    <div class="flex items-center justify-between px-1 pt-1">
+      <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider">မကြာသေးမီ မှတ်တမ်းများ</h2>
+      <span class="text-xs text-slate-400 font-medium" id="txCount">0 စာရင်း</span>
+    </div>
+
+    <!-- Transaction List -->
+    <div id="txList" class="space-y-2.5">
+      <div class="glass-card-subtle rounded-3xl py-14 text-center text-slate-500 text-xs">
+        <i class="fa-regular fa-folder-open text-3xl mb-2.5 block text-slate-600"></i>
+        မှတ်တမ်းများ မရှိသေးပါ။
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Add Transaction Bottom-Sheet Modal -->
+  <div id="txModal" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden transition-all duration-300">
+    <div class="glass-card w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl p-6 shadow-2xl relative animate-in fade-in slide-in-from-bottom duration-200">
+      
+      <!-- Drag Indicator Pill for Mobile -->
+      <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-4 sm:hidden"></div>
+
+      <div class="flex items-center justify-between pb-3 border-b border-white/10">
+        <h3 class="text-sm font-bold text-white tracking-wide">မှတ်တမ်းအသစ် ရေးသွင်းရန်</h3>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-full glass-pill flex items-center justify-center text-slate-400 hover:text-white active:scale-90 transition">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+      </div>
+
+      <form id="txForm" onsubmit="saveTransaction(event)" class="mt-4 space-y-3.5">
+        <!-- Type Capsule Switcher -->
+        <div class="grid grid-cols-2 gap-1.5 p-1 bg-black/40 rounded-2xl border border-white/10">
+          <button type="button" onclick="setType('expense')" id="typeExpBtn" class="py-2 text-xs font-bold rounded-xl transition bg-rose-500/30 text-rose-300 border border-rose-500/40 shadow-inner">
+            <i class="fa-solid fa-arrow-trend-down mr-1.5"></i>အသုံးစရိတ်
+          </button>
+          <button type="button" onclick="setType('income')" id="typeIncBtn" class="py-2 text-xs font-bold rounded-xl transition text-slate-400 hover:text-white">
+            <i class="fa-solid fa-arrow-trend-up mr-1.5"></i>ဝင်ငွေ
+          </button>
+        </div>
+
+        <!-- Amount & Currency -->
+        <div class="grid grid-cols-3 gap-2">
+          <div class="col-span-2">
+            <label class="block text-[11px] text-slate-300 font-medium mb-1">ပမာဏ</label>
+            <input type="number" step="any" id="txAmount" required placeholder="0.00" class="w-full glass-input rounded-xl px-3.5 py-2.5 text-white font-bold text-base focus:outline-none focus:border-indigo-400 tracking-wide" />
+          </div>
+          <div>
+            <label class="block text-[11px] text-slate-300 font-medium mb-1">ငွေကြေး</label>
+            <select id="txCurrency" class="w-full glass-input rounded-xl px-3 py-2.5 text-white font-bold text-sm focus:outline-none focus:border-indigo-400">
+              <option value="MMK" class="bg-slate-900">MMK</option>
+              <option value="THB" class="bg-slate-900">THB</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Date & Wallet -->
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[11px] text-slate-300 font-medium mb-1">ရက်စွဲ</label>
+            <input type="date" id="txDate" required class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400" />
+          </div>
+          <div>
+            <label class="block text-[11px] text-slate-300 font-medium mb-1">ပိုက်ဆံအိတ် / အကောင့်</label>
+            <select id="txAccount" class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400">
+              <option value="Cash" class="bg-slate-900">💵 လက်ထဲငွေသား (Cash)</option>
+              <option value="KBZPay" class="bg-slate-900">📱 KBZPay</option>
+              <option value="WavePay" class="bg-slate-900">📱 WavePay</option>
+              <option value="KBZ Bank" class="bg-slate-900">🏦 KBZ Bank</option>
+              <option value="AYA Bank" class="bg-slate-900">🏦 AYA Bank</option>
+              <option value="uab Bank" class="bg-slate-900">🏦 uab Bank</option>
+              <option value="Thai Bank" class="bg-slate-900">🇹🇭 Thai Bank</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div>
+          <label class="block text-[11px] text-slate-300 font-medium mb-1">အမျိုးအစား</label>
+          <select id="txCategory" class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400">
+            <option value="စားသောက်စရိတ်" class="bg-slate-900">🍜 စားသောက်စရိတ်</option>
+            <option value="အဝတ်အထည်နှင့်ဈေးဝယ်" class="bg-slate-900">🛍️ အဝတ်အထည် / ဈေးဝယ်</option>
+            <option value="ခရီးစရိတ်/ဆီဖိုး" class="bg-slate-900">⛽ ခရီးစရိတ် / ဆီဖိုး</option>
+            <option value="ဖုန်းဘေလ်/မီတာခ" class="bg-slate-900">💡 ဖုန်းဘေလ် / မီတာခ</option>
+            <option value="အထွေထွေအသုံးစရိတ်" class="bg-slate-900">📦 အထွေထွေ အသုံးစရိတ်</option>
+            <option value="လုပ်ငန်းသုံးငွေ" class="bg-slate-900">💼 လုပ်ငန်းသုံးစရိတ်</option>
+            <option value="လစာ/လုပ်အားခ" class="bg-slate-900">💰 လစာ / လုပ်အားခ</option>
+            <option value="အခြားဝင်ငွေ" class="bg-slate-900">📈 အခြားဝင်ငွေ</option>
+          </select>
+        </div>
+
+        <!-- Note -->
+        <div>
+          <label class="block text-[11px] text-slate-300 font-medium mb-1">မှတ်ချက်</label>
+          <input type="text" id="txNote" placeholder="မှတ်ချက်ရေးပါ (စိတ်ကြိုက်)..." class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400" />
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="saveBtn" class="w-full bg-gradient-to-r from-indigo-500 via-blue-600 to-indigo-600 hover:opacity-90 text-white font-bold py-3 rounded-2xl transition shadow-lg shadow-indigo-500/25 active:scale-98 text-xs tracking-wide mt-2">
+          စာရင်းသိမ်းဆည်းမည်
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, serverTimestamp } 
+      from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBTe7OqqxOj95S6clKWQKHUK9dXQlb9BuU",
+      authDomain: "my-personal-wallet-e7313.firebaseapp.com",
+      projectId: "my-personal-wallet-e7313",
+      storageBucket: "my-personal-wallet-e7313.firebasestorage.app",
+      messagingSenderId: "903403464770",
+      appId: "1:903403464770:web:2b4fd05177d3303b04e5db",
+      measurementId: "G-P6T1HSJ3R1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const txCollection = collection(db, "transactions");
+
+    let currentType = 'expense';
+    let activeFilter = 'all';
+    let transactions = [];
+
+    // Set today's date as default in modal
+    document.getElementById("txDate").value = new Date().toISOString().split('T')[0];
+
+    // Real-time listener
+    const q = query(txCollection, orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      transactions = [];
+      snapshot.forEach((docSnap) => {
+        transactions.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      render();
+    }, (error) => {
+      console.error("Firestore error:", error);
+    });
+
+    window.setType = function(type) {
+      currentType = type;
+      const expBtn = document.getElementById("typeExpBtn");
+      const incBtn = document.getElementById("typeIncBtn");
+      if (type === 'expense') {
+        expBtn.className = "py-2 text-xs font-bold rounded-xl transition bg-rose-500/30 text-rose-300 border border-rose-500/40 shadow-inner";
+        incBtn.className = "py-2 text-xs font-bold rounded-xl transition text-slate-400 hover:text-white";
+      } else {
+        incBtn.className = "py-2 text-xs font-bold rounded-xl transition bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 shadow-inner";
+        expBtn.className = "py-2 text-xs font-bold rounded-xl transition text-slate-400 hover:text-white";
+      }
+    };
+
+    window.openModal = function() {
+      document.getElementById("txModal").classList.remove("hidden");
+    };
+
+    window.closeModal = function() {
+      document.getElementById("txModal").classList.add("hidden");
+      document.getElementById("txForm").reset();
+      document.getElementById("txDate").value = new Date().toISOString().split('T')[0];
+      setType('expense');
+    };
+
+    window.setFilter = function(filter) {
+      activeFilter = filter;
+      ['all', 'expense', 'income'].forEach(f => {
+        const btn = document.getElementById(`filter-${f}`);
+        if (f === filter) {
+          btn.className = "py-1.5 text-xs font-bold rounded-lg transition bg-white/20 text-white shadow-sm";
+        } else {
+          btn.className = "py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition";
+        }
+      });
+      render();
+    };
+
+    window.applyFilters = function() {
+      render();
+    };
+
+    window.saveTransaction = async function(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById("saveBtn");
+      saveBtn.disabled = true;
+      saveBtn.innerText = "သိမ်းဆည်းနေပါသည်...";
+
+      const amount = parseFloat(document.getElementById("txAmount").value);
+      const currency = document.getElementById("txCurrency").value;
+      const account = document.getElementById("txAccount").value;
+      const category = document.getElementById("txCategory").value;
+      const note = document.getElementById("txNote").value.trim();
+      const customDate = document.getElementById("txDate").value;
+
+      try {
+        await addDoc(txCollection, {
+          type: currentType,
+          amount: amount,
+          currency: currency,
+          account: account,
+          category: category,
+          note: note,
+          createdAt: serverTimestamp(),
+          dateStr: customDate
+        });
+        closeModal();
+      } catch (err) {
+        alert("သိမ်းဆည်းရာတွင် အမှားဖြစ်သွားပါသည်: " + err.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerText = "စာရင်းသိမ်းဆည်းမည်";
+      }
+    };
+
+    window.deleteTx = async function(id) {
+      if (confirm("ဤမှတ်တမ်းကို ဖျက်ရန် သေချာပါသလား?")) {
+        try {
+          await deleteDoc(doc(db, "transactions", id));
+        } catch (err) {
+          alert("ဖျက်ရာတွင် အမှားဖြစ်သွားပါသည်: " + err.message);
+        }
+      }
+    };
+
+    // CSV Export Feature
+    window.exportToCSV = function() {
+      if (transactions.length === 0) {
+        alert("ဒေါင်းလုဒ်ဆွဲရန် မှတ်တမ်းမရှိသေးပါ။");
+        return;
+      }
+      let csvContent = "data:text/csv;charset=utf-8,ID,Date,Type,Amount,Currency,Account,Category,Note\n";
+      transactions.forEach(t => {
+        csvContent += `"${t.id}","${t.dateStr || ''}","${t.type}","${t.amount}","${t.currency}","${t.account}","${t.category}","${t.note || ''}"\n`;
+      });
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Wallet_Export_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+
+    function render() {
+      let totMMK = 0, incMMK = 0, expMMK = 0;
+      let totTHB = 0, incTHB = 0, expTHB = 0;
+
+      // Group accounts for pill breakdown
+      const accountBalances = {};
+
+      transactions.forEach(t => {
+        const amt = Number(t.amount) || 0;
+        const cur = t.currency || 'MMK';
+        const acc = t.account || 'Cash';
+
+        if (!accountBalances[acc]) {
+          accountBalances[acc] = { MMK: 0, THB: 0 };
+        }
+
+        if (cur === "MMK") {
+          if (t.type === 'income') {
+            incMMK += amt;
+            totMMK += amt;
+            accountBalances[acc].MMK += amt;
+          } else {
+            expMMK += amt;
+            totMMK -= amt;
+            accountBalances[acc].MMK -= amt;
+          }
+        } else if (cur === "THB") {
+          if (t.type === 'income') {
+            incTHB += amt;
+            totTHB += amt;
+            accountBalances[acc].THB += amt;
+          } else {
+            expTHB += amt;
+            totTHB -= amt;
+            accountBalances[acc].THB -= amt;
+          }
+        }
+      });
+
+      document.getElementById("totalMMK").innerHTML = `${totMMK.toLocaleString()} <span class="text-xs font-semibold text-slate-400">MMK</span>`;
+      document.getElementById("incMMK").innerHTML = `<i class="fa-solid fa-arrow-down-long text-[10px]"></i> +${incMMK.toLocaleString()}`;
+      document.getElementById("expMMK").innerHTML = `<i class="fa-solid fa-arrow-up-long text-[10px]"></i> -${expMMK.toLocaleString()}`;
+
+      document.getElementById("totalTHB").innerHTML = `${totTHB.toLocaleString()} <span class="text-xs font-semibold text-slate-400">THB</span>`;
+      document.getElementById("incTHB").innerHTML = `<i class="fa-solid fa-arrow-down-long text-[10px]"></i> +${incTHB.toLocaleString()}`;
+      document.getElementById("expTHB").innerHTML = `<i class="fa-solid fa-arrow-up-long text-[10px]"></i> -${expTHB.toLocaleString()}`;
+
+      // Render Account Breakdown Pills
+      const accountEl = document.getElementById("accountBreakdownList");
+      const defaultAccounts = ['Cash', 'KBZPay', 'WavePay', 'KBZ Bank', 'AYA Bank', 'uab Bank', 'Thai Bank'];
+      accountEl.innerHTML = defaultAccounts.map(acc => {
+        const bal = accountBalances[acc] || { MMK: 0, THB: 0 };
+        return `
+          <div class="glass-pill rounded-2xl px-3.5 py-2.5 shrink-0 flex flex-col justify-center min-w-[130px]">
+            <span class="text-[10px] text-slate-400 font-medium">${acc}</span>
+            <div class="text-xs font-bold text-white mt-0.5">${bal.MMK.toLocaleString()} <span class="text-[9px] text-slate-400 font-normal">K</span></div>
+            <div class="text-[11px] font-bold text-amber-300">${bal.THB.toLocaleString()} <span class="text-[9px] text-slate-400 font-normal">THB</span></div>
+          </div>
+        `;
+      }).join('');
+
+      // Search & Type Filtering
+      const searchQuery = (document.getElementById("searchInput") ? document.getElementById("searchInput").value : '').toLowerCase();
+
+      const filtered = transactions.filter(t => {
+        const matchesFilter = (activeFilter === 'all') || (t.type === activeFilter);
+        const matchesSearch = !searchQuery || 
+          (t.category && t.category.toLowerCase().includes(searchQuery)) ||
+          (t.note && t.note.toLowerCase().includes(searchQuery)) ||
+          (t.account && t.account.toLowerCase().includes(searchQuery));
+        return matchesFilter && matchesSearch;
+      });
+
+      document.getElementById("txCount").innerText = `${filtered.length} စာရင်း`;
+      const listEl = document.getElementById("txList");
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `
+          <div class="glass-card-subtle rounded-3xl py-14 text-center text-slate-500 text-xs">
+            <i class="fa-regular fa-folder-open text-3xl mb-2.5 block text-slate-600"></i>
+            ရှာဖွေထားသော မှတ်တမ်း မရှိပါ။
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(item => {
+        const isExp = item.type === 'expense';
+        const sign = isExp ? '-' : '+';
+        const colorClass = isExp ? 'text-rose-400' : 'text-emerald-400';
+        const bgIcon = isExp ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+        const icon = isExp ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up';
+
+        return `
+          <div class="glass-card-subtle hover:bg-white/[0.12] transition-all rounded-2xl p-3.5 flex items-center justify-between group">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl ${bgIcon} flex items-center justify-center text-sm shrink-0 shadow-inner">
+                <i class="fa-solid ${icon}"></i>
+              </div>
+              <div>
+                <div class="font-bold text-xs sm:text-sm text-white tracking-tight">${item.category}</div>
+                <div class="text-[10px] text-slate-400 flex items-center gap-2 mt-0.5">
+                  <span class="glass-pill px-1.5 py-0.5 rounded-md text-[9px] text-slate-300">${item.account}</span>
+                  <span>${item.dateStr || ''}</span>
+                  ${item.note ? `<span class="italic text-slate-300">• ${item.note}</span>` : ''}
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="font-black text-xs sm:text-sm ${colorClass} tracking-tight">
+                ${sign}${(item.amount || 0).toLocaleString()} <span class="text-[10px] font-normal text-slate-400">${item.currency}</span>
+              </span>
+              <button onclick="deleteTx('${item.id}')" class="w-7 h-7 rounded-full glass-pill flex items-center justify-center text-slate-500 hover:text-rose-400 active:scale-90 transition">
+                <i class="fa-solid fa-trash-can text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>
