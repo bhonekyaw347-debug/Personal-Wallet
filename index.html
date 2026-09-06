@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Personal Wallet • Fintech OS 3.2</title>
+  <title>Personal Wallet • Fintech OS 3.3</title>
   
-  <!-- Premium Fonts (Plus Jakarta Sans & Noto Sans Myanmar) -->
+  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
     }
 
     .glass-surface {
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid rgba(255, 255, 255, 0.09);
@@ -43,18 +43,18 @@
     }
 
     .glass-input {
-      background: rgba(8, 12, 22, 0.75);
+      background: rgba(8, 12, 22, 0.85);
       backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
     }
 
     .glass-dock {
-      background: rgba(10, 15, 28, 0.9);
+      background: rgba(10, 15, 28, 0.92);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
     }
 
     .pin-btn {
@@ -122,26 +122,16 @@
     </div>
   </div>
 
-  <!-- Top Fintech Header -->
-  <header class="sticky top-0 z-30 px-4 py-3 bg-[#04060d]/80 backdrop-blur-2xl border-b border-white/[0.08]">
+  <!-- Sleek Minimal Header (Clean, No bulky logo block) -->
+  <header class="sticky top-0 z-30 px-4 py-2.5 bg-[#04060d]/85 backdrop-blur-2xl border-b border-white/[0.08]">
     <div class="max-w-4xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl glass-card-glow flex items-center justify-center text-indigo-400 shadow-md">
-          <i class="fa-solid fa-wallet text-base"></i>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-sm sm:text-base tracking-tight text-white">Personal Wallet</h1>
-            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> SYNC
-            </span>
-          </div>
-          <p class="text-[10px] text-slate-400 font-medium">Fintech OS • v3.2 Pro</p>
-        </div>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-xs font-bold tracking-wide text-slate-300">SYNC ACTIVE</span>
       </div>
 
-      <!-- Quick Actions -->
-      <div class="flex items-center gap-2">
+      <!-- Quick Actions (EN/MM, Lock, Eye, CSV) -->
+      <div class="flex items-center gap-1.5">
         <button onclick="toggleLanguage()" id="langBtn" class="h-8 px-2.5 rounded-xl glass-pill hover:bg-white/15 active:scale-95 transition flex items-center gap-1 text-[11px] font-bold text-indigo-300">
           <i class="fa-solid fa-globe text-[10px]"></i> <span id="langText">EN</span>
         </button>
@@ -158,13 +148,13 @@
     </div>
   </header>
 
-  <!-- Main Content Container -->
-  <main class="max-w-4xl mx-auto px-4 mt-4 space-y-6">
+  <!-- Main Container -->
+  <main class="max-w-4xl mx-auto px-4 mt-3 space-y-6">
 
-    <!-- TAB 1: DASHBOARD VIEW (Primary Balances are inside here now) -->
+    <!-- TAB 1: DASHBOARD VIEW (Balances only visible here) -->
     <div id="viewDashboard" class="space-y-6">
       
-      <!-- Primary Balance Cards (MMK & THB) - Only visible on Dashboard -->
+      <!-- Primary Balance Cards (MMK & THB) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         <!-- MMK Card -->
         <div class="glass-card-glow rounded-[26px] p-5 relative overflow-hidden">
@@ -235,10 +225,8 @@
       <div id="txList" class="space-y-2.5"></div>
     </div>
 
-    <!-- TAB 2: ANALYTICS & REPORTS VIEW (Balances will NOT appear here) -->
+    <!-- TAB 2: ANALYTICS & REPORTS VIEW -->
     <div id="viewAnalytics" class="hidden space-y-6">
-      
-      <!-- Timeframe Segment Filter -->
       <div class="glass-surface rounded-2xl p-2.5 space-y-2.5">
         <div class="grid grid-cols-4 gap-1.5 p-1 bg-black/40 rounded-xl border border-white/5 text-xs font-bold">
           <button onclick="setTimeframe('week')" id="tf-week" class="py-2 rounded-lg text-slate-400 hover:text-white transition" data-i18n="tf_week">ဒီတစ်ပတ်</button>
@@ -247,7 +235,6 @@
           <button onclick="setTimeframe('custom')" id="tf-custom" class="py-2 rounded-lg text-slate-400 hover:text-white transition" data-i18n="tf_custom">ရက်ရွေး</button>
         </div>
 
-        <!-- Custom Date Range -->
         <div id="customDateRangeBox" class="hidden grid grid-cols-2 gap-2.5 pt-1">
           <div>
             <label class="block text-[10px] text-slate-400 mb-1" data-i18n="from_date">စတင်သည့်ရက်</label>
@@ -271,7 +258,6 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
-          <!-- MMK Summary -->
           <div class="bg-black/30 rounded-2xl p-3.5 border border-white/5 space-y-1.5">
             <span class="text-[11px] font-bold text-slate-300 uppercase">ကျပ် (MMK)</span>
             <div class="space-y-1 text-xs">
@@ -290,7 +276,6 @@
             </div>
           </div>
 
-          <!-- THB Summary -->
           <div class="bg-black/30 rounded-2xl p-3.5 border border-white/5 space-y-1.5">
             <span class="text-[11px] font-bold text-slate-300 uppercase">ဘတ် (THB)</span>
             <div class="space-y-1 text-xs">
@@ -318,7 +303,6 @@
             <h3 class="font-bold text-sm text-white" data-i18n="top_cat_title">Top Spending Categories</h3>
             <p class="text-[11px] text-slate-400" data-i18n="top_cat_sub">အများဆုံး သုံးစွဲထားသော ကဏ္ဍများ</p>
           </div>
-          <!-- Currency Capsule Switcher -->
           <div class="grid grid-cols-2 gap-1 p-1 bg-black/50 rounded-xl border border-white/10 text-xs font-bold w-48">
             <button onclick="setAnalyticsCurrency('MMK')" id="an-curr-mmk" class="py-1 rounded-lg bg-indigo-600 text-white transition">MMK (ကျပ်)</button>
             <button onclick="setAnalyticsCurrency('THB')" id="an-curr-thb" class="py-1 rounded-lg text-slate-400 hover:text-white transition">THB (ဘတ်)</button>
@@ -335,13 +319,11 @@
         </div>
         <div id="topExpensesList" class="space-y-2"></div>
       </div>
-
     </div>
 
-    <!-- TAB 3: TOOLS VIEW (Balances will NOT appear here) -->
+    <!-- TAB 3: TOOLS VIEW -->
     <div id="viewTools" class="hidden space-y-6">
-
-      <!-- 1. Currency Converter Tool (MMK ⇄ THB) -->
+      <!-- Quick Currency Converter -->
       <div class="glass-surface rounded-3xl p-5 space-y-3.5">
         <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
           <div>
@@ -374,7 +356,7 @@
         </div>
       </div>
 
-      <!-- 2. Dual-Currency Budget Limits (MMK & THB) -->
+      <!-- Budget Limits (Dual Currency MMK & THB) -->
       <div class="glass-surface rounded-3xl p-5 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-2.5">
           <div>
@@ -394,7 +376,7 @@
         <div id="budgetProgressList" class="space-y-3 pt-1"></div>
       </div>
 
-      <!-- 3. Recurring Bills Tracker -->
+      <!-- Recurring Bills -->
       <div class="glass-surface rounded-3xl p-5 space-y-3.5">
         <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
           <div>
@@ -407,7 +389,6 @@
         </div>
         <div id="recurringBillsList" class="space-y-2 pt-1"></div>
       </div>
-
     </div>
 
   </main>
@@ -425,7 +406,6 @@
         <span class="text-[10px] font-bold" data-i18n="dock_report">စာရင်းချုပ်</span>
       </button>
 
-      <!-- Center Plus Add Button -->
       <button onclick="openModal()" class="w-12 h-12 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 hover:opacity-90 active:scale-90 transition flex items-center justify-center text-white shadow-lg shadow-indigo-500/40 -mt-5 border-2 border-[#04060d]">
         <i class="fa-solid fa-plus text-base"></i>
       </button>
@@ -437,120 +417,123 @@
     </div>
   </div>
 
-  <!-- Add Transaction Modal -->
-  <div id="txModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden transition-all duration-300">
-    <div class="glass-surface w-full sm:max-w-md rounded-t-[36px] sm:rounded-3xl p-6 shadow-2xl relative animate-in fade-in slide-in-from-bottom duration-200 max-h-[90vh] overflow-y-auto no-scrollbar">
-      <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-4 sm:hidden"></div>
+  <!-- Add Transaction Modal (Native Fullscreen on Mobile, Centered on PC) -->
+  <div id="txModal" class="fixed inset-0 bg-[#04060d] sm:bg-black/80 sm:backdrop-blur-md z-50 flex items-start sm:items-center justify-center p-0 sm:p-4 hidden transition-all duration-300 overflow-y-auto no-scrollbar">
+    <div class="glass-surface w-full sm:max-w-md min-h-screen sm:min-h-0 sm:rounded-3xl p-5 sm:p-6 shadow-2xl relative flex flex-col justify-between">
+      
+      <div>
+        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+          <h3 class="text-sm font-extrabold text-white tracking-wide" data-i18n="modal_tx_title">မှတ်တမ်းအသစ် ရေးသွင်းရန်</h3>
+          <button onclick="closeModal()" class="w-8 h-8 rounded-full glass-pill flex items-center justify-center text-slate-400 hover:text-white active:scale-90 transition">
+            <i class="fa-solid fa-xmark text-xs"></i>
+          </button>
+        </div>
 
-      <div class="flex items-center justify-between pb-3 border-b border-white/10">
-        <h3 class="text-sm font-extrabold text-white tracking-wide" data-i18n="modal_tx_title">မှတ်တမ်းအသစ် ရေးသွင်းရန်</h3>
-        <button onclick="closeModal()" class="w-8 h-8 rounded-full glass-pill flex items-center justify-center text-slate-400 hover:text-white active:scale-90 transition">
-          <i class="fa-solid fa-xmark text-xs"></i>
-        </button>
+        <form id="txForm" onsubmit="saveTransaction(event)" class="mt-4 space-y-3.5">
+          <!-- Type Switcher -->
+          <div class="grid grid-cols-3 gap-1 p-1 bg-black/50 rounded-2xl border border-white/10 text-xs font-bold">
+            <button type="button" onclick="setType('expense')" id="typeExpBtn" class="py-2.5 rounded-xl transition bg-rose-500/30 text-rose-300 border border-rose-500/40 shadow-inner" data-i18n="type_exp">
+              အသုံးစရိတ်
+            </button>
+            <button type="button" onclick="setType('income')" id="typeIncBtn" class="py-2.5 rounded-xl transition text-slate-400 hover:text-white" data-i18n="type_inc">
+              ဝင်ငွေ
+            </button>
+            <button type="button" onclick="setType('transfer')" id="typeTraBtn" class="py-2.5 rounded-xl transition text-slate-400 hover:text-white" data-i18n="type_tra">
+              ငွေလွှဲ
+            </button>
+          </div>
+
+          <!-- Amount & Currency -->
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-2">
+              <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="amount_label">ပမာဏ</label>
+              <input type="number" step="any" id="txAmount" required placeholder="0.00" class="w-full glass-input rounded-xl px-3.5 py-2.5 text-white font-black text-lg focus:outline-none focus:border-indigo-400 tracking-wide" />
+            </div>
+            <div>
+              <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="curr_label">ငွေကြေး</label>
+              <select id="txCurrency" class="w-full glass-input rounded-xl px-3 py-3 text-white font-bold text-xs focus:outline-none focus:border-indigo-400">
+                <option value="MMK" class="bg-slate-900">MMK (ကျပ်)</option>
+                <option value="THB" class="bg-slate-900">THB (ဘတ်)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Date -->
+          <div>
+            <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="date_label">ရက်စွဲ</label>
+            <input type="date" id="txDate" required class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400" />
+          </div>
+
+          <!-- Normal Account -->
+          <div id="normalAccountBox">
+            <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="acc_label">ပိုက်ဆံအိတ် / ဘဏ်</label>
+            <select id="txAccount" class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400">
+              <option value="Cash" class="bg-slate-900">💵 လက်ထဲငွေသား (Cash)</option>
+              <option value="KBZPay" class="bg-slate-900">📱 KBZPay</option>
+              <option value="WavePay" class="bg-slate-900">📱 WavePay</option>
+              <option value="KBZ Bank" class="bg-slate-900">🏦 KBZ Bank</option>
+              <option value="AYA Bank" class="bg-slate-900">🏦 AYA Bank</option>
+              <option value="uab Bank" class="bg-slate-900">🏦 uab Bank</option>
+              <option value="Thai Bank" class="bg-slate-900">🇹🇭 Thai Bank</option>
+            </select>
+          </div>
+
+          <!-- Transfer Accounts -->
+          <div id="transferAccountBox" class="hidden grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs text-rose-300 font-bold mb-1" data-i18n="from_acc_label">လွှဲထုတ်မည့်အကောင့်</label>
+              <select id="txFromAccount" class="w-full glass-input rounded-xl px-2.5 py-2 text-white text-xs focus:outline-none">
+                <option value="KBZ Bank" class="bg-slate-900">🏦 KBZ Bank</option>
+                <option value="Cash" class="bg-slate-900">💵 Cash</option>
+                <option value="KBZPay" class="bg-slate-900">📱 KBZPay</option>
+                <option value="WavePay" class="bg-slate-900">📱 WavePay</option>
+                <option value="AYA Bank" class="bg-slate-900">🏦 AYA Bank</option>
+                <option value="uab Bank" class="bg-slate-900">🏦 uab Bank</option>
+                <option value="Thai Bank" class="bg-slate-900">🇹🇭 Thai Bank</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-emerald-300 font-bold mb-1" data-i18n="to_acc_label">လက်ခံမည့်အကောင့်</label>
+              <select id="txToAccount" class="w-full glass-input rounded-xl px-2.5 py-2 text-white text-xs focus:outline-none">
+                <option value="KBZPay" class="bg-slate-900">📱 KBZPay</option>
+                <option value="Cash" class="bg-slate-900">💵 Cash</option>
+                <option value="WavePay" class="bg-slate-900">📱 WavePay</option>
+                <option value="KBZ Bank" class="bg-slate-900">🏦 KBZ Bank</option>
+                <option value="AYA Bank" class="bg-slate-900">🏦 AYA Bank</option>
+                <option value="uab Bank" class="bg-slate-900">🏦 uab Bank</option>
+                <option value="Thai Bank" class="bg-slate-900">🇹🇭 Thai Bank</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Filtered Category Dropdown -->
+          <div id="categoryBox">
+            <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="cat_label">အမျိုးအစား</label>
+            <select id="txCategory" onchange="checkCustomCategory()" class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400">
+              <!-- Dynamically Populated in JS based on Expense/Income -->
+            </select>
+          </div>
+
+          <!-- Custom Category Input (Shows when Custom is selected) -->
+          <div id="customCategoryBox" class="hidden">
+            <label class="block text-xs text-indigo-300 font-bold mb-1">✏️ စိတ်ကြိုက် အမျိုးအစား ရိုက်ထည့်ပါ</label>
+            <input type="text" id="txCustomCategoryInput" placeholder="ဥပမာ- ရွှေဝယ်၊ ကားပြင်၊ အလှူငွေ..." class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none border-indigo-400/80" />
+          </div>
+
+          <!-- Note -->
+          <div>
+            <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="note_label">မှတ်ချက် (စိတ်ကြိုက်)</label>
+            <input type="text" id="txNote" placeholder="အသေးစိတ် မှတ်လိုပါက ရေးပါ..." class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400" />
+          </div>
+
+          <div class="pt-3 pb-8 sm:pb-0">
+            <button type="submit" id="saveBtn" class="w-full bg-gradient-to-r from-indigo-500 via-blue-600 to-indigo-600 hover:opacity-90 text-white font-bold py-3.5 rounded-2xl transition shadow-lg shadow-indigo-500/25 active:scale-98 text-xs sm:text-sm tracking-wide" data-i18n="btn_save">
+              စာရင်း အတည်ပြုသိမ်းဆည်းမည်
+            </button>
+          </div>
+        </form>
       </div>
-
-      <form id="txForm" onsubmit="saveTransaction(event)" class="mt-4 space-y-3.5">
-        <!-- Type Switcher -->
-        <div class="grid grid-cols-3 gap-1 p-1 bg-black/50 rounded-2xl border border-white/10 text-xs font-bold">
-          <button type="button" onclick="setType('expense')" id="typeExpBtn" class="py-2.5 rounded-xl transition bg-rose-500/30 text-rose-300 border border-rose-500/40 shadow-inner" data-i18n="type_exp">
-            အသုံးစရိတ်
-          </button>
-          <button type="button" onclick="setType('income')" id="typeIncBtn" class="py-2.5 rounded-xl transition text-slate-400 hover:text-white" data-i18n="type_inc">
-            ဝင်ငွေ
-          </button>
-          <button type="button" onclick="setType('transfer')" id="typeTraBtn" class="py-2.5 rounded-xl transition text-slate-400 hover:text-white" data-i18n="type_tra">
-            ငွေလွှဲ
-          </button>
-        </div>
-
-        <!-- Amount & Currency -->
-        <div class="grid grid-cols-3 gap-2">
-          <div class="col-span-2">
-            <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="amount_label">ပမာဏ</label>
-            <input type="number" step="any" id="txAmount" required placeholder="0.00" class="w-full glass-input rounded-xl px-3.5 py-2.5 text-white font-black text-lg focus:outline-none focus:border-indigo-400 tracking-wide" />
-          </div>
-          <div>
-            <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="curr_label">ငွေကြေး</label>
-            <select id="txCurrency" class="w-full glass-input rounded-xl px-3 py-3 text-white font-bold text-xs focus:outline-none focus:border-indigo-400">
-              <option value="MMK" class="bg-slate-900">MMK (ကျပ်)</option>
-              <option value="THB" class="bg-slate-900">THB (ဘတ်)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Date -->
-        <div>
-          <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="date_label">ရက်စွဲ</label>
-          <input type="date" id="txDate" required class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400" />
-        </div>
-
-        <!-- Normal Account -->
-        <div id="normalAccountBox">
-          <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="acc_label">ပိုက်ဆံအိတ် / ဘဏ်</label>
-          <select id="txAccount" class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400">
-            <option value="Cash" class="bg-slate-900">💵 လက်ထဲငွေသား (Cash)</option>
-            <option value="KBZPay" class="bg-slate-900">📱 KBZPay</option>
-            <option value="WavePay" class="bg-slate-900">📱 WavePay</option>
-            <option value="KBZ Bank" class="bg-slate-900">🏦 KBZ Bank</option>
-            <option value="AYA Bank" class="bg-slate-900">🏦 AYA Bank</option>
-            <option value="uab Bank" class="bg-slate-900">🏦 uab Bank</option>
-            <option value="Thai Bank" class="bg-slate-900">🇹🇭 Thai Bank</option>
-          </select>
-        </div>
-
-        <!-- Transfer Dual Accounts -->
-        <div id="transferAccountBox" class="hidden grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-xs text-rose-300 font-bold mb-1" data-i18n="from_acc_label">လွှဲထုတ်မည့်အကောင့်</label>
-            <select id="txFromAccount" class="w-full glass-input rounded-xl px-2.5 py-2 text-white text-xs focus:outline-none">
-              <option value="KBZ Bank" class="bg-slate-900">🏦 KBZ Bank</option>
-              <option value="Cash" class="bg-slate-900">💵 Cash</option>
-              <option value="KBZPay" class="bg-slate-900">📱 KBZPay</option>
-              <option value="WavePay" class="bg-slate-900">📱 WavePay</option>
-              <option value="AYA Bank" class="bg-slate-900">🏦 AYA Bank</option>
-              <option value="uab Bank" class="bg-slate-900">🏦 uab Bank</option>
-              <option value="Thai Bank" class="bg-slate-900">🇹🇭 Thai Bank</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs text-emerald-300 font-bold mb-1" data-i18n="to_acc_label">လက်ခံမည့်အကောင့်</label>
-            <select id="txToAccount" class="w-full glass-input rounded-xl px-2.5 py-2 text-white text-xs focus:outline-none">
-              <option value="KBZPay" class="bg-slate-900">📱 KBZPay</option>
-              <option value="Cash" class="bg-slate-900">💵 Cash</option>
-              <option value="WavePay" class="bg-slate-900">📱 WavePay</option>
-              <option value="KBZ Bank" class="bg-slate-900">🏦 KBZ Bank</option>
-              <option value="AYA Bank" class="bg-slate-900">🏦 AYA Bank</option>
-              <option value="uab Bank" class="bg-slate-900">🏦 uab Bank</option>
-              <option value="Thai Bank" class="bg-slate-900">🇹🇭 Thai Bank</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Category -->
-        <div id="categoryBox">
-          <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="cat_label">အမျိုးအစား</label>
-          <select id="txCategory" class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400">
-            <option value="စားသောက်စရိတ်" class="bg-slate-900">🍜 စားသောက်စရိတ်</option>
-            <option value="အဝတ်အထည်နှင့်ဈေးဝယ်" class="bg-slate-900">🛍️ အဝတ်အထည် / ဈေးဝယ်စရိတ်</option>
-            <option value="ခရီးစရိတ်/ဆီဖိုး" class="bg-slate-900">⛽ ခရီးစရိတ် / စက်သုံးဆီ</option>
-            <option value="ဖုန်းဘေလ်/မီတာခ" class="bg-slate-900">💡 ဖုန်းဘေလ် / မီတာခ</option>
-            <option value="အထွေထွေအသုံးစရိတ်" class="bg-slate-900">📦 အထွေထွေ အသုံးစရိတ်</option>
-            <option value="လုပ်ငန်းသုံးငွေ" class="bg-slate-900">💼 လုပ်ငန်းသုံးစရိတ်</option>
-            <option value="လစာ/လုပ်အားခ" class="bg-slate-900">💰 လစာ / လုပ်အားခ</option>
-            <option value="အခြားဝင်ငွေ" class="bg-slate-900">📈 အခြားဝင်ငွေ</option>
-          </select>
-        </div>
-
-        <!-- Note -->
-        <div>
-          <label class="block text-xs text-slate-300 font-medium mb-1" data-i18n="note_label">မှတ်ချက် (စိတ်ကြိုက်)</label>
-          <input type="text" id="txNote" placeholder="အသေးစိတ် မှတ်လိုပါက ရေးပါ..." class="w-full glass-input rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-indigo-400" />
-        </div>
-
-        <button type="submit" id="saveBtn" class="w-full bg-gradient-to-r from-indigo-500 via-blue-600 to-indigo-600 hover:opacity-90 text-white font-bold py-3.5 rounded-2xl transition shadow-lg shadow-indigo-500/25 active:scale-98 text-xs sm:text-sm tracking-wide mt-2" data-i18n="btn_save">
-          စာရင်း အတည်ပြုသိမ်းဆည်းမည်
-        </button>
-      </form>
+      
     </div>
   </div>
 
@@ -562,7 +545,6 @@
         <button onclick="closeBudgetModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
       
-      <!-- Currency Tab in Modal -->
       <div class="grid grid-cols-2 gap-1 p-1 bg-black/40 rounded-xl border border-white/10 text-xs font-bold">
         <button type="button" onclick="switchModalBudgetCurrency('MMK')" id="mb-curr-mmk" class="py-1.5 rounded-lg bg-indigo-600 text-white">MMK (ကျပ်)</button>
         <button type="button" onclick="switchModalBudgetCurrency('THB')" id="mb-curr-thb" class="py-1.5 rounded-lg text-slate-400">THB (ဘတ်)</button>
@@ -650,7 +632,35 @@
     const db = getFirestore(app);
     const txCollection = collection(db, "transactions");
 
-    // Translations Dictionary
+    // Comprehensive Separated Category Lists
+    const expenseCategories = [
+      "🍜 စားသောက်စရိတ် (Food & Drink)",
+      "🛍️ အဝတ်အထည်နှင့်ဈေးဝယ် (Shopping)",
+      "⛽ ခရီးစရိတ် / ဆီဖိုး (Transport)",
+      "💡 ဖုန်းဘေလ် / မီတာခ (Bills & Utilities)",
+      "🛒 အိမ်သုံးစရိတ် / ကုန်စုံ (Groceries)",
+      "💊 ကျန်းမာရေး / ဆေးဝါး (Healthcare)",
+      "✨ အလှပြင် / Skincare (Personal Care)",
+      "🎮 ဖျော်ဖြေရေး / ဂိမ်း (Entertainment)",
+      "📚 ပညာရေး / စာအုပ် (Education)",
+      "🙏 အလှူအတန်း / လက်ဆောင် (Donation & Gifts)",
+      "💼 လုပ်ငန်းသုံးစရိတ် (Business)",
+      "📦 အထွေထွေ အသုံးစရိတ် (General)",
+      "✏️ စိတ်ကြိုက် ရိုက်ထည့်မည်... (Custom)"
+    ];
+
+    const incomeCategories = [
+      "💰 လစာ / လုပ်အားခ (Salary)",
+      "💼 စီးပွားရေး / အရောင်းအဝယ် (Business)",
+      "💻 အလွတ်တန်း / Freelance (Freelance)",
+      "🎁 လက်ဆောင် / မုန့်ဖိုး (Gift & Allowance)",
+      "📈 ရင်းနှီးမြှုပ်နှံမှု / အမြတ် (Investment)",
+      "💸 ကြွေးကျေ / ငွေပြန်ရ (Refund & Debt)",
+      "📦 အခြားဝင်ငွေ (Other Income)",
+      "✏️ စိတ်ကြိုက် ရိုက်ထည့်မည်... (Custom)"
+    ];
+
+    // Translations
     const translations = {
       my: {
         balance_mmk: "မြန်မာကျပ် (MMK)", balance_thb: "ထိုင်းဘတ် (THB)", wallets: "ပိုက်ဆံအိတ်များ",
@@ -706,7 +716,26 @@
     let transactions = [];
     let isPrivate = localStorage.getItem('wallet_privacy') === 'true';
 
-    // Language Handling
+    // Populate Categories Dynamically
+    window.populateCategories = function(type) {
+      const select = document.getElementById("txCategory");
+      const list = (type === 'income') ? incomeCategories : expenseCategories;
+      select.innerHTML = list.map(c => `<option value="${c}" class="bg-slate-900">${c}</option>`).join('');
+      checkCustomCategory();
+    };
+
+    window.checkCustomCategory = function() {
+      const val = document.getElementById("txCategory").value;
+      const customBox = document.getElementById("customCategoryBox");
+      if (val.includes("စိတ်ကြိုက် ရိုက်ထည့်မည်")) {
+        customBox.classList.remove("hidden");
+        document.getElementById("txCustomCategoryInput").focus();
+      } else {
+        customBox.classList.add("hidden");
+      }
+    };
+
+    // Language Toggle
     window.toggleLanguage = function() {
       currentLang = currentLang === 'my' ? 'en' : 'my';
       localStorage.setItem('wallet_lang', currentLang);
@@ -729,7 +758,7 @@
     }
     applyLangDOM();
 
-    // PIN Lock Screen
+    // PIN State
     let enteredPin = "";
     let isSetupMode = !localStorage.getItem('wallet_pin');
 
@@ -811,7 +840,6 @@
     };
     updatePinUI();
 
-    // Haptics & Toast
     function triggerHaptic(ms = 10) {
       if (navigator.vibrate) try { navigator.vibrate(ms); } catch(e) {}
     }
@@ -828,7 +856,7 @@
 
     document.getElementById("txDate").value = new Date().toISOString().split('T')[0];
 
-    // Realtime Firestore Listener
+    // Real-time Firestore Sync
     const q = query(txCollection, orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
       transactions = [];
@@ -838,7 +866,6 @@
       renderBudgets();
     }, (err) => console.error("Firestore error:", err));
 
-    // View Switcher (Dock Tabs)
     window.switchTab = function(tab) {
       triggerHaptic(12);
       ['Dashboard', 'Analytics', 'Tools'].forEach(t => {
@@ -893,7 +920,7 @@
       render();
     };
 
-    // Type Switcher (Expense / Income / Transfer)
+    // Type Switcher (Filter category options dynamically)
     window.setType = function(type) {
       triggerHaptic(8);
       currentType = type;
@@ -903,30 +930,36 @@
       const normAcc = document.getElementById("normalAccountBox");
       const traAcc = document.getElementById("transferAccountBox");
       const catBox = document.getElementById("categoryBox");
+      const customBox = document.getElementById("customCategoryBox");
 
       [expBtn, incBtn, traBtn].forEach(b => b.className = "py-2.5 rounded-xl transition text-slate-400 hover:text-white");
 
       if (type === 'expense') {
         expBtn.className = "py-2.5 rounded-xl transition bg-rose-500/30 text-rose-300 border border-rose-500/40 shadow-inner";
         normAcc.classList.remove("hidden"); traAcc.classList.add("hidden"); catBox.classList.remove("hidden");
+        populateCategories('expense');
       } else if (type === 'income') {
         incBtn.className = "py-2.5 rounded-xl transition bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 shadow-inner";
         normAcc.classList.remove("hidden"); traAcc.classList.add("hidden"); catBox.classList.remove("hidden");
+        populateCategories('income');
       } else if (type === 'transfer') {
         traBtn.className = "py-2.5 rounded-xl transition bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 shadow-inner";
         normAcc.classList.add("hidden"); traAcc.classList.remove("hidden"); catBox.classList.add("hidden");
+        customBox.classList.add("hidden");
       }
     };
 
     window.openModal = function() {
       triggerHaptic(15);
       document.getElementById("txModal").classList.remove("hidden");
+      setType('expense');
     };
 
     window.closeModal = function() {
       document.getElementById("txModal").classList.add("hidden");
       document.getElementById("txForm").reset();
       document.getElementById("txDate").value = new Date().toISOString().split('T')[0];
+      document.getElementById("customCategoryBox").classList.add("hidden");
       setType('expense');
     };
 
@@ -943,7 +976,7 @@
 
     window.applyFilters = function() { render(); };
 
-    // Save Transaction
+    // Save Transaction (Supports Custom Category)
     window.saveTransaction = async function(e) {
       e.preventDefault();
       triggerHaptic(20);
@@ -971,7 +1004,12 @@
         docData.category = "ငွေလွှဲ (Transfer)";
       } else {
         docData.account = document.getElementById("txAccount").value;
-        docData.category = document.getElementById("txCategory").value;
+        let selectedCat = document.getElementById("txCategory").value;
+        if (selectedCat.includes("စိတ်ကြိုက် ရိုက်ထည့်မည်")) {
+          const customInput = document.getElementById("txCustomCategoryInput").value.trim();
+          selectedCat = customInput ? `🏷️ ${customInput}` : (currentType === 'expense' ? '📦 အထွေထွေ အသုံးစရိတ်' : '📦 အခြားဝင်ငွေ');
+        }
+        docData.category = selectedCat;
       }
 
       try {
@@ -998,7 +1036,6 @@
       }
     };
 
-    // CSV Export
     window.exportToCSV = function() {
       triggerHaptic(15);
       if (transactions.length === 0) {
@@ -1018,7 +1055,6 @@
       showToast("CSV Downloaded");
     };
 
-    // Currency Converter
     window.calculateConvert = function(source) {
       const rate = parseFloat(document.getElementById("convRate").value) || 1;
       const thbIn = document.getElementById("convTHB");
@@ -1033,7 +1069,7 @@
       }
     };
 
-    // Dual-Currency Budget Limits Logic
+    // Budget Limits
     const defaultDualBudgets = {
       MMK: { food: 300000, shop: 150000, travel: 100000, bills: 50000 },
       THB: { food: 3000, shop: 1500, travel: 1000, bills: 500 }
@@ -1110,7 +1146,11 @@
       const catSpent = { "စားသောက်စရိတ်": 0, "အဝတ်အထည်နှင့်ဈေးဝယ်": 0, "ခရီးစရိတ်/ဆီဖိုး": 0, "ဖုန်းဘေလ်/မီတာခ": 0 };
 
       transactions.filter(t => t.type === 'expense' && (t.dateStr || '').startsWith(currentMonth) && t.currency === budgetDisplayCurrency)
-        .forEach(t => { if (catSpent[t.category] !== undefined) catSpent[t.category] += Number(t.amount) || 0; });
+        .forEach(t => {
+          for (let k in catSpent) {
+            if ((t.category || '').includes(k)) catSpent[k] += Number(t.amount) || 0;
+          }
+        });
 
       const currSymbol = budgetDisplayCurrency === 'MMK' ? 'K' : '฿';
       const budgetItems = [
@@ -1182,7 +1222,7 @@
           amount: bill.amount,
           currency: bill.currency,
           account: bill.account,
-          category: 'ဖုန်းဘေလ်/မီတာခ',
+          category: '💡 ဖုန်းဘေလ် / မီတာခ (Bills & Utilities)',
           note: `[Recurring] ${bill.title}`,
           dateStr: new Date().toISOString().split('T')[0],
           createdAt: serverTimestamp()
@@ -1223,7 +1263,7 @@
       `).join('');
     }
 
-    // Analytics Calculations (Pure separation for MMK & THB)
+    // Analytics Filtering
     function filterByTimeframe(txs) {
       if (activeTimeframe === 'all') return txs;
       const now = new Date();
@@ -1270,7 +1310,6 @@
         }
       });
 
-      // Update Financial Overview Cards
       document.getElementById("repIncMMK").innerText = `+${incM.toLocaleString()} K`;
       document.getElementById("repExpMMK").innerText = `-${expM.toLocaleString()} K`;
       document.getElementById("repNetMMK").innerText = `${(incM - expM).toLocaleString()} K`;
@@ -1279,7 +1318,6 @@
       document.getElementById("repExpTHB").innerText = `-${expT.toLocaleString()} ฿`;
       document.getElementById("repNetTHB").innerText = `${(incT - expT).toLocaleString()} ฿`;
 
-      // Top Spending Categories
       const catListEl = document.getElementById("analyticsCategoryList");
       const targetTotal = analyticsCurrency === 'MMK' ? expM : expT;
       const sortedCats = Object.entries(categoryMap).sort((a, b) => b[1] - a[1]);
@@ -1303,7 +1341,6 @@
         }).join('');
       }
 
-      // Top 5 Largest Expenses
       const topListEl = document.getElementById("topExpensesList");
       const top5 = expenseItems.sort((a, b) => Number(b.amount) - Number(a.amount)).slice(0, 5);
       if (top5.length === 0) {
@@ -1324,7 +1361,7 @@
       }
     }
 
-    // Main Render Function
+    // Main Render
     function render() {
       let totMMK = 0, incMMK = 0, expMMK = 0;
       let totTHB = 0, incTHB = 0, expTHB = 0;
@@ -1369,7 +1406,6 @@
       document.getElementById("incTHB").innerHTML = `<i class="fa-solid fa-arrow-down-long text-[9px]"></i> +${isPrivate ? '•••' : incTHB.toLocaleString()}`;
       document.getElementById("expTHB").innerHTML = `<i class="fa-solid fa-arrow-up-long text-[9px]"></i> -${isPrivate ? '•••' : expTHB.toLocaleString()}`;
 
-      // Accounts Carousel
       const accountEl = document.getElementById("accountBreakdownList");
       const defaultAccounts = ['Cash', 'KBZPay', 'WavePay', 'KBZ Bank', 'AYA Bank', 'uab Bank', 'Thai Bank'];
       accountEl.innerHTML = defaultAccounts.map(acc => {
@@ -1383,7 +1419,6 @@
         `;
       }).join('');
 
-      // Search & Filters
       const searchQuery = (document.getElementById("searchInput") ? document.getElementById("searchInput").value : '').toLowerCase();
       const filtered = transactions.filter(t => {
         const matchesFilter = (activeFilter === 'all') || (t.type === activeFilter);
